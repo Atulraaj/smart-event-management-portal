@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Dashboard</title>
+</head>
+<body>
+<main>
+    <h1>Welcome to your dashboard</h1>
+
+    <nav>
+        <ul>
+            <li><a th:href="@{/user/events}">View Events</a></li>
+            <li><a th:href="@{/user/registrations}">My Registrations</a></li>
+            <li><a th:href="@{/logout}">Logout</a></li>
+        </ul>
+    </nav>
+</main>
+</body>
+</html>
