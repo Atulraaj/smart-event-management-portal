@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register</title>
+
+</head>
+<body>
+<main>
+    <section>
+        <h1>Smart Event Management Portal</h1>
+        <h2>Register</h2>
+
+        <p th:if="${error}" th:text="${error}"></p>
+
+        <form th:action="@{/register}" th:object="${user}" method="post">
+            <div>
+                <label for="name">Name</label>
+                <input id="name" type="text" th:field="*{name}" required autofocus>
+            </div>
+
+            <div>
+                <label for="email">Email</label>
+                <input id="email" type="email" th:field="*{email}" required>
+            </div>
+
+            <div>
+                <label for="password">Password</label>
+                <input id="password" type="password" th:field="*{password}" required>
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p>
+            <a th:href="@{/login}">Already have an account?</a>
+        </p>
+    </section>
+</main>
+</body>
+</html>
