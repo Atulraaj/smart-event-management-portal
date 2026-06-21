@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Attendance Management</title>
+</head>
+<body>
+<main>
+    <h1>Attendance Management</h1>
+
+    <p>
+        <a th:href="@{/admin/dashboard}">Admin Dashboard</a>
+        <a th:href="@{/logout}">Logout</a>
+    </p>
+
+    <p th:if="${success}" th:text="${success}"></p>
+    <p th:if="${error}" th:text="${error}"></p>
+    <p th:if="${#lists.isEmpty(registrations)}">No registrations are available.</p>
+
+    <table border="1" th:unless="${#lists.isEmpty(registrations)}">
+        <thead>
+        <tr>
+            <th>Event Name</th>
+            <th>User Name</th>
+            <th>Registration Status</th>
+            <th>Attendance Status</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="registration : ${registrations}">
+            <td th:text="${registration.event.title}">Event</td>
+            <td th:text="${registration.user.name}">User</td>
+            <td th:text="${registration.status}">Registration Status</td>
+            <td th:text="${registration.attendance != null ? 'Present' : 'Not Marked'}">
+                Attendance Status
+            </td>
+            <td>
+                <a th:if="${registration.attendance == null}"
+                   th:href="@{/admin/attendance/mark/{id}(id=${registration.id})}">
+                    Mark Attendance
+                </a>
+                <span th:if="${registration.attendance != null}">Marked</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+</body>
+</html>
