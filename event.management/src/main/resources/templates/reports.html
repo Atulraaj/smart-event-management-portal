@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reports</title>
+</head>
+<body>
+<main>
+    <h1>Reports</h1>
+
+    <p>
+        <a th:href="@{/admin/dashboard}">Admin Dashboard</a>
+        <a th:href="@{/logout}">Logout</a>
+    </p>
+
+    <section>
+        <h2>Summary</h2>
+        <ul>
+            <li>Total Users: <span th:text="${totalUsers}">0</span></li>
+            <li>Total Events: <span th:text="${totalEvents}">0</span></li>
+            <li>Total Registrations: <span th:text="${totalRegistrations}">0</span></li>
+            <li>Total Attendance: <span th:text="${totalAttendance}">0</span></li>
+            <li>Total Feedback: <span th:text="${totalFeedback}">0</span></li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Event-wise Registrations</h2>
+
+        <p th:if="${#lists.isEmpty(events)}">No events are available.</p>
+
+        <table border="1" th:unless="${#lists.isEmpty(events)}">
+            <thead>
+            <tr>
+                <th>Event Name</th>
+                <th>Venue</th>
+                <th>Capacity</th>
+                <th>Total Registrations</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="event : ${events}">
+                <td th:text="${event.title}">Event Name</td>
+                <td th:text="${event.venue}">Venue</td>
+                <td th:text="${event.capacity}">0</td>
+                <td th:text="${registrationCounts[event.id]}">0</td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+</body>
+</html>
