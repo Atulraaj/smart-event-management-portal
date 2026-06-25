@@ -174,7 +174,7 @@
                     <div class="row g-3 small mb-4">
                         <div class="col-12">
                             <span class="text-muted-custom fw-semibold d-block mb-1">Date</span>
-                            <span th:text="${event.startDateTime}">Date</span>
+                            <span th:text="${#temporals.format(event.startDateTime, 'dd MMM yyyy, hh:mm a')}">Date</span>
                         </div>
                         <div class="col-6">
                             <span class="text-muted-custom fw-semibold d-block mb-1">Capacity</span>

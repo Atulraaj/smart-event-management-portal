@@ -213,7 +213,7 @@
                            th:text="${registration.event.title}">Event</a>
                     </td>
                     <td th:text="${registration.event.venue}">Venue</td>
-                    <td th:text="${registration.event.startDateTime}">Start</td>
+                    <td th:text="${#temporals.format(registration.event.startDateTime, 'dd MMM yyyy, hh:mm a')}">Start</td>
                     <td th:text="${#temporals.format(registration.registeredAt, 'dd MMM yyyy, hh:mm a')}">
                         Registered At
                     </td>
@@ -257,7 +257,7 @@
 
                     <dl class="row small mb-4">
                         <dt class="col-5 text-muted-custom fw-semibold">Start</dt>
-                        <dd class="col-7 mb-2" th:text="${registration.event.startDateTime}">Start</dd>
+                        <dd class="col-7 mb-2" th:text="${#temporals.format(registration.event.startDateTime, 'dd MMM yyyy, hh:mm a')}">Start</dd>
                         <dt class="col-5 text-muted-custom fw-semibold">Registered</dt>
                         <dd class="col-7 mb-0"
                             th:text="${#temporals.format(registration.registeredAt, 'dd MMM yyyy, hh:mm a')}">

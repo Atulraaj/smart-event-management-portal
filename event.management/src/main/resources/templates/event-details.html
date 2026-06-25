@@ -172,11 +172,11 @@
                 </div>
                 <div class="detail-row">
                     <span class="text-muted-custom fw-semibold d-block mb-1">Start</span>
-                    <span th:text="${event.startDateTime}">Start</span>
+                    <span th:text="${#temporals.format(event.startDateTime, 'dd MMM yyyy, hh:mm a')}">Start</span>
                 </div>
                 <div class="detail-row">
                     <span class="text-muted-custom fw-semibold d-block mb-1">End</span>
-                    <span th:text="${event.endDateTime}">End</span>
+                    <span th:text="${#temporals.format(event.endDateTime, 'dd MMM yyyy, hh:mm a')}">End</span>
                 </div>
                 <div class="detail-row pb-0">
                     <span class="text-muted-custom fw-semibold d-block mb-1">Capacity</span>

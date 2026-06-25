@@ -190,8 +190,8 @@
                 <tr th:each="event : ${events}">
                     <td class="fw-semibold" th:text="${event.title}">Title</td>
                     <td th:text="${event.venue}">Venue</td>
-                    <td th:text="${event.startDateTime}">Start</td>
-                    <td th:text="${event.endDateTime}">End</td>
+                    <td th:text="${#temporals.format(event.startDateTime, 'dd MMM yyyy, hh:mm a')}">Start</td>
+                    <td th:text="${#temporals.format(event.endDateTime, 'dd MMM yyyy, hh:mm a')}">End</td>
                     <td th:text="${event.capacity}">Capacity</td>
                     <td class="text-end">
                         <div class="d-inline-flex gap-2">
@@ -222,9 +222,9 @@
                     </div>
                     <dl class="row small mb-4">
                         <dt class="col-4 text-muted-custom fw-semibold">Start</dt>
-                        <dd class="col-8 mb-2" th:text="${event.startDateTime}">Start</dd>
+                        <dd class="col-8 mb-2" th:text="${#temporals.format(event.startDateTime, 'dd MMM yyyy, hh:mm a')}">Start</dd>
                         <dt class="col-4 text-muted-custom fw-semibold">End</dt>
-                        <dd class="col-8 mb-0" th:text="${event.endDateTime}">End</dd>
+                        <dd class="col-8 mb-0" th:text="${#temporals.format(event.endDateTime, 'dd MMM yyyy, hh:mm a')}">End</dd>
                     </dl>
                     <div class="d-grid gap-2">
                         <a class="btn btn-outline-primary" th:href="@{/admin/events/edit/{id}(id=${event.id})}">

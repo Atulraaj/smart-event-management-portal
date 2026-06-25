@@ -186,7 +186,7 @@
                         <span class="text-muted-custom small ms-1" th:text="${feedback.rating}">Rating</span>
                     </td>
                     <td th:text="${feedback.comments}">Comments</td>
-                    <td th:text="${feedback.submittedAt}">Submitted At</td>
+                    <td th:text="${#temporals.format(feedback.submittedAt, 'dd MMM yyyy, hh:mm a')}">Submitted At</td>
                 </tr>
                 </tbody>
             </table>
@@ -209,7 +209,7 @@
                     <p class="mb-4" th:text="${feedback.comments}">Comments</p>
                     <div class="small text-muted-custom">
                         <i class="bi bi-clock me-1"></i>
-                        <span th:text="${feedback.submittedAt}">Submitted At</span>
+                        <span th:text="${#temporals.format(feedback.submittedAt, 'dd MMM yyyy, hh:mm a')}">Submitted At</span>
                     </div>
                 </article>
             </div>
