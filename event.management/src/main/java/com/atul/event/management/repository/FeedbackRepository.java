@@ -11,4 +11,6 @@ public interface FeedbackRepository extends JpaRepository<Feedback, Long> {
     List<Feedback> findByEvent(Event event);
 
     List<Feedback> findByUser(User user);
+
+    boolean existsByUserAndEvent(User user, Event event);
 }

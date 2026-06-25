@@ -28,6 +28,12 @@ public class FeedbackService {
             throw new IllegalArgumentException("Rating must be between 1 and 5.");
         }
 
+        if (feedbackRepository.existsByUserAndEvent(user, event)) {
+            throw new IllegalStateException(
+                    "You have already submitted feedback for this event."
+            );
+        }
+
         Registration registration = registrationRepository.findByUser(user).stream()
                 .filter(item -> item.getEvent().getId().equals(event.getId()))
                 .findFirst()

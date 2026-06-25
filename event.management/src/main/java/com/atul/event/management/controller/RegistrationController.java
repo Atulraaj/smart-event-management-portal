@@ -4,8 +4,11 @@ import com.atul.event.management.entity.Event;
 import com.atul.event.management.entity.User;
 import com.atul.event.management.repository.UserRepository;
 import com.atul.event.management.service.EventService;
+import com.atul.event.management.service.FeedbackService;
 import com.atul.event.management.service.RegistrationService;
 import java.security.Principal;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +23,7 @@ public class RegistrationController {
 
     private final RegistrationService registrationService;
     private final EventService eventService;
+    private final FeedbackService feedbackService;
     private final UserRepository userRepository;
 
     @PostMapping("/user/events/{id}/register")
@@ -45,7 +49,12 @@ public class RegistrationController {
     @GetMapping("/user/registrations")
     public String myRegistrations(Principal principal, Model model) {
         User user = getCurrentUser(principal);
+        Set<Long> submittedFeedbackEventIds = feedbackService.getFeedbackByUser(user).stream()
+                .map(feedback -> feedback.getEvent().getId())
+                .collect(Collectors.toSet());
+
         model.addAttribute("registrations", registrationService.getRegistrationsByUser(user));
+        model.addAttribute("submittedFeedbackEventIds", submittedFeedbackEventIds);
         return "my-registrations";
     }
 

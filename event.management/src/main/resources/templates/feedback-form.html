@@ -67,17 +67,61 @@
             border-radius: 999px;
         }
 
-        .form-select,
         .form-control {
             border-color: #d8dee9;
             border-radius: 12px;
             padding: 0.85rem 1rem;
         }
 
-        .form-select:focus,
         .form-control:focus {
             border-color: var(--brand-blue);
             box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.13);
+        }
+
+        .event-summary {
+            background: #f8fafc;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+        }
+
+        .summary-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: rgba(37, 99, 235, 0.10);
+            color: var(--brand-blue);
+            flex: 0 0 auto;
+        }
+
+        .star-rating {
+            gap: 0.25rem;
+        }
+
+        .star-btn {
+            width: 52px;
+            height: 52px;
+            border: 0;
+            border-radius: 14px;
+            background: rgba(37, 99, 235, 0.08);
+            color: #f59e0b;
+            font-size: 1.75rem;
+            line-height: 1;
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+
+        .star-btn:hover,
+        .star-btn:focus {
+            background: rgba(245, 158, 11, 0.14);
+            transform: translateY(-2px);
+            outline: none;
+        }
+
+        .star-btn i {
+            pointer-events: none;
+        }
+
+        .rating-helper {
+            min-height: 1.5rem;
         }
 
         .btn-primary {
@@ -129,9 +173,18 @@
 
             .btn-primary,
             .btn-outline-secondary,
-            .form-select,
             .form-control {
                 min-height: 52px;
+            }
+
+            .star-rating {
+                justify-content: space-between;
+            }
+
+            .star-btn {
+                width: 48px;
+                height: 48px;
+                font-size: 1.55rem;
             }
         }
     </style>
@@ -185,19 +238,70 @@
                 <p class="text-muted-custom mb-0">Your feedback helps improve future events.</p>
             </div>
 
+            <section class="event-summary p-4 mb-4">
+                <h3 class="h5 fw-bold mb-3" th:text="${event.title}">Event Title</h3>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="summary-icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-geo-alt"></i>
+                            </span>
+                            <div>
+                                <span class="text-muted-custom small fw-semibold d-block">Venue</span>
+                                <span th:text="${event.venue}">Venue</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="summary-icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-calendar-event"></i>
+                            </span>
+                            <div>
+                                <span class="text-muted-custom small fw-semibold d-block">Start Date &amp; Time</span>
+                                <span th:text="${#temporals.format(event.startDateTime, 'dd MMM yyyy, hh:mm a')}">25 Jun 2026, 10:00 AM</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="d-flex align-items-center gap-3">
+                            <span class="summary-icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-clock"></i>
+                            </span>
+                            <div>
+                                <span class="text-muted-custom small fw-semibold d-block">End Date &amp; Time</span>
+                                <span th:text="${#temporals.format(event.endDateTime, 'dd MMM yyyy, hh:mm a')}">25 Jun 2026, 01:00 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <div class="alert alert-danger" role="alert" th:if="${error}" th:text="${error}"></div>
+            <div class="alert alert-danger d-none" id="ratingError" role="alert">Please select a rating before submitting.</div>
 
             <form th:action="@{/user/events/{id}/feedback(id=${event.id})}" method="post">
                 <div class="mb-4">
                     <label class="form-label fw-semibold" for="rating">Rating</label>
-                    <select class="form-select form-select-lg" id="rating" name="rating" required>
-                        <option value="">Select a rating</option>
-                        <option value="1">1 - Poor</option>
-                        <option value="2">2 - Fair</option>
-                        <option value="3">3 - Good</option>
-                        <option value="4">4 - Very Good</option>
-                        <option value="5">5 - Excellent</option>
-                    </select>
+                    <input type="hidden" name="rating" id="rating" required>
+                    <div class="star-rating d-flex align-items-center" aria-label="Select rating from 1 to 5">
+                        <button class="star-btn d-inline-flex align-items-center justify-content-center" type="button" data-rating="1" aria-label="1 star">
+                            <i class="bi bi-star"></i>
+                        </button>
+                        <button class="star-btn d-inline-flex align-items-center justify-content-center" type="button" data-rating="2" aria-label="2 stars">
+                            <i class="bi bi-star"></i>
+                        </button>
+                        <button class="star-btn d-inline-flex align-items-center justify-content-center" type="button" data-rating="3" aria-label="3 stars">
+                            <i class="bi bi-star"></i>
+                        </button>
+                        <button class="star-btn d-inline-flex align-items-center justify-content-center" type="button" data-rating="4" aria-label="4 stars">
+                            <i class="bi bi-star"></i>
+                        </button>
+                        <button class="star-btn d-inline-flex align-items-center justify-content-center" type="button" data-rating="5" aria-label="5 stars">
+                            <i class="bi bi-star"></i>
+                        </button>
+                    </div>
+                    <p class="rating-helper text-muted-custom fw-semibold mt-3 mb-0" id="ratingText">Select a rating</p>
                 </div>
 
                 <div class="mb-4">
@@ -218,5 +322,66 @@
     </section>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const ratingInput = document.getElementById('rating');
+    const ratingText = document.getElementById('ratingText');
+    const ratingError = document.getElementById('ratingError');
+    const starButtons = Array.from(document.querySelectorAll('.star-btn'));
+    const ratingLabels = {
+        1: '★☆☆☆☆ Poor',
+        2: '★★☆☆☆ Fair',
+        3: '★★★☆☆ Good',
+        4: '★★★★☆ Very Good',
+        5: '★★★★★ Excellent'
+    };
+
+    function paintStars(value) {
+        starButtons.forEach((button) => {
+            const star = button.querySelector('i');
+            const isFilled = Number(button.dataset.rating) <= value;
+            star.classList.toggle('bi-star-fill', isFilled);
+            star.classList.toggle('bi-star', !isFilled);
+        });
+    }
+
+    function setRating(value) {
+        ratingInput.value = value;
+        ratingText.textContent = ratingLabels[value];
+        ratingError.classList.add('d-none');
+        paintStars(value);
+    }
+
+    starButtons.forEach((button) => {
+        const value = Number(button.dataset.rating);
+
+        button.addEventListener('mouseenter', () => {
+            paintStars(value);
+            ratingText.textContent = ratingLabels[value];
+        });
+
+        button.addEventListener('focus', () => {
+            paintStars(value);
+            ratingText.textContent = ratingLabels[value];
+        });
+
+        button.addEventListener('click', () => {
+            setRating(value);
+        });
+    });
+
+    document.querySelector('.star-rating').addEventListener('mouseleave', () => {
+        const value = Number(ratingInput.value);
+        paintStars(value);
+        ratingText.textContent = value ? ratingLabels[value] : 'Select a rating';
+    });
+
+    document.querySelector('form').addEventListener('submit', (event) => {
+        if (!ratingInput.value) {
+            event.preventDefault();
+            ratingError.classList.remove('d-none');
+            starButtons[0].focus();
+        }
+    });
+</script>
 </body>
 </html>

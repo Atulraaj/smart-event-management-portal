@@ -222,11 +222,16 @@
                     </td>
                     <td class="text-end">
                         <a class="btn btn-primary btn-sm"
-                           th:if="${registration.attendance != null and registration.attendance.present}"
+                           th:if="${registration.attendance != null and registration.attendance.present and !submittedFeedbackEventIds.contains(registration.event.id)}"
                            th:href="@{/user/events/{id}/feedback(id=${registration.event.id})}">
                             Give Feedback <i class="bi bi-arrow-right ms-1"></i>
                         </a>
-                        <span class="text-muted-custom small" th:unless="${registration.attendance != null and registration.attendance.present}">
+                        <span class="badge badge-soft rounded-pill px-3 py-2"
+                              th:if="${submittedFeedbackEventIds.contains(registration.event.id)}">
+                            Feedback Submitted
+                        </span>
+                        <span class="text-muted-custom small"
+                              th:unless="${registration.attendance != null and registration.attendance.present or submittedFeedbackEventIds.contains(registration.event.id)}">
                             Available after attendance
                         </span>
                     </td>
@@ -261,11 +266,16 @@
                     </dl>
 
                     <a class="btn btn-primary fw-semibold"
-                       th:if="${registration.attendance != null and registration.attendance.present}"
+                       th:if="${registration.attendance != null and registration.attendance.present and !submittedFeedbackEventIds.contains(registration.event.id)}"
                        th:href="@{/user/events/{id}/feedback(id=${registration.event.id})}">
                         Give Feedback <i class="bi bi-arrow-right ms-2"></i>
                     </a>
-                    <div class="text-muted-custom small" th:unless="${registration.attendance != null and registration.attendance.present}">
+                    <span class="badge badge-soft rounded-pill px-3 py-2"
+                          th:if="${submittedFeedbackEventIds.contains(registration.event.id)}">
+                        Feedback Submitted
+                    </span>
+                    <div class="text-muted-custom small"
+                         th:unless="${registration.attendance != null and registration.attendance.present or submittedFeedbackEventIds.contains(registration.event.id)}">
                         <i class="bi bi-clock me-1"></i>Feedback available after attendance
                     </div>
                 </article>
